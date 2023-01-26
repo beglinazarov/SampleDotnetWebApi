@@ -29,10 +29,19 @@ pipeline {
             }
         }
 
-        stage("Dotnet Restoring packages") {
+        stage("DotNet Restoring Packages") {
             steps {
                 bat '"C:\\Program Files\\dotnet\\dotnet.exe" restore "%WORKSPACE%\\SampleDotnetWebApi.csproj"'
             }
         }
+
+        stage('DotNet Build & Publish ') {
+            steps {
+                bat '"C:\\Program Files\\dotnet\\dotnet.exe" build "%WORKSPACE%\\SampleDotnetWebApi.csproj"' 
+                bat '"C:\\Program Files\\dotnet\\dotnet.exe" publish -c release -o "Releases\\WebApi_${{BUILD_ID}}" --no-restore' 
+            }
+        }
+ }
+
     }
 }
