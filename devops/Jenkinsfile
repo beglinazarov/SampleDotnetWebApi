@@ -69,11 +69,14 @@ pipeline {
                 //bat 'net stop "w3svc"' 
                 //bat '%msdeploy% -verb:sync -source:iisApp="${WORKSPACE}\\${env.publishedPath}"  -dest:iisApp="${iisApplicationName}",ComputerName="https://${targetServerIP}:8172/msdeploy.axd",UserName="serviceaccount",Password="wBdL2azuw3333C556P",AuthType="Basic" -allowUntrusted -enableRule:AppOffline'
                 //bat '%msdeploy% -verb:sync -source:iisApp="${publishedPath}\\${env.publishedPath}_v%BUILD_ID%" -dest:-dest:iisApp="${iisApplicationName} -skip:objectName=filePath, AuthType="Basic" -enableRule:DoNotDelete -allowUntrusted=true'
-                withCredentials([usernamePassword(credentialsId: 'iis-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) { 
-                    bat """ 
-                        %msdeploy%  -verb:sync  -source:iisApp="${WORKSPACE}\\${publishedPath}" -enableRule:AppOffline -dest:iisApp="${iisApplicationName}", UserName="$USERNAME",Password="$PASSWORD", AuthType="Basic" -allowUntrusted
-                        """
-                }
+                // withCredentials([usernamePassword(credentialsId: 'iis-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) { 
+                //     bat """ 
+                //         %msdeploy%  -verb:sync  -source:iisApp="${WORKSPACE}\\${publishedPath}" -enableRule:AppOffline -dest:iisApp="${iisApplicationName}", computerName="https://${targetServerIP}:8172/msdeploy.axd", UserName="$USERNAME",Password="$PASSWORD", AuthType="Basic" -allowUntrusted
+                //         """
+                // }
+
+                withCredentials([usernamePassword(credentialsId: 'iis-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) { bat """ "C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe" -verb:sync -source:iisApp="${WORKSPACE}\\${publishedPath}" -enableRule:AppOffline -dest:iisApp="${iisApplicationName}",ComputerName="https://${targetServerIP}:8172/msdeploy.axd",UserName="$USERNAME",Password="$PASSWORD",AuthType="Basic" -allowUntrusted"""}
+
 
                 //bat 'net start "w3svc"'
             }
