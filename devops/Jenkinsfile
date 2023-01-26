@@ -31,21 +31,22 @@ pipeline {
 
         stage("DotNet Restoring Packages") {
             steps {
-                bat '"C:\\Program Files\\dotnet\\dotnet.exe" restore "%WORKSPACE%\\SampleDotnetWebApi.csproj"'
+                bat '%dotnet% restore "%WORKSPACE%\\SampleDotnetWebApi.csproj"'
             }
         }
 
         stage('DotNet Build & Publish ') {
             steps {
-                bat '"C:\\Program Files\\dotnet\\dotnet.exe" build "%WORKSPACE%\\SampleDotnetWebApi.csproj"' 
-                bat '"C:\\Program Files\\dotnet\\dotnet.exe" publish -c release -o "Releases\\WebApi_v%BUILD_ID%" --no-restore' 
+                bat '%dotnet% build "%WORKSPACE%\\SampleDotnetWebApi.csproj"' 
+                bat '%dotnet% publish -c release -o "Releases\\WebApi_v%BUILD_ID%" --no-restore' 
             }
         }
 
         stage('DotNet Release Test') {
             steps {
-                bat '"C:\\Program Files\\dotnet\\dotnet.exe" publish -c release -o "C:\\Program Files\\Releases\\WebApi_v%BUILD_ID%" --no-restore' 
+                bat '%dotnet% publish -c release -o "C:\\Releases\\WebApi_v%BUILD_ID%" --no-restore' 
             }
         }
+
     }
 }
