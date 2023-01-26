@@ -62,7 +62,7 @@ pipeline {
                     iisApplicationPath = 'C:\\inetpub\\SampleDotnetWebApi'
 
                     //Hedef makinesinin IP'si
-                    targetServerIP = '0.0.0.0'
+                    targetServerIP = 'KurumsalTest'
                 }
             steps {
                 //Deploy application on IIS
