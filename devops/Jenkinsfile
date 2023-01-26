@@ -41,7 +41,5 @@ pipeline {
                 bat '"C:\\Program Files\\dotnet\\dotnet.exe" publish -c release -o "Releases\\WebApi_${{BUILD_ID}}" --no-restore' 
             }
         }
- }
-
     }
 }
