@@ -75,7 +75,7 @@ pipeline {
                 //         """
                 // }
 
-                withCredentials([usernamePassword(credentialsId: 'iis-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) { bat """ "C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe" -verb:sync -source:iisApp="${WORKSPACE}\\${publishedPath}" -enableRule:AppOffline -dest:auto,ComputerName="https://${targetServerIP}:8172/msdeploy.axd?site=${iisApplicationName}",UserName="KURUMSALTEST\WDeployAdmin",Password="deployer", -allowUntrusted=true -skip:Directory="App_Data"""}
+                withCredentials([usernamePassword(credentialsId: 'iis-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) { bat """ "C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe" -verb:sync -source:iisApp="${WORKSPACE}\\${publishedPath}" -enableRule:AppOffline -dest:auto,ComputerName="https://${targetServerIP}:8172/msdeploy.axd?site=${iisApplicationName}",UserName="KURUMSALTEST\WDeployAdmin",Password="deployer", -authType=Basic -allowUntrusted=true -skip:Directory="App_Data"""}
 
 
                 //bat 'net start "w3svc"'
