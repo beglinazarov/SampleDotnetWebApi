@@ -44,7 +44,7 @@ pipeline {
 
         stage('DotNet Release Test') {
             steps {
-                bat '"C:\\Program Files\\dotnet\\dotnet.exe" publish -c release -o "C:\\Program Files\\Releases\\WebApi_v${{env.BUILD_ID}}" --no-restore' 
+                bat '"C:\\Program Files\\dotnet\\dotnet.exe" publish -c release -o "C:\\Program Files\\Releases\\WebApi_v16" --no-restore' 
             }
         }
     }
