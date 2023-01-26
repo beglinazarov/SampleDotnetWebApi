@@ -53,7 +53,7 @@ pipeline {
                     projectName = 'SampleDotnetWebApi'
 
                     //Kaynak kodun publish edileceği dizin
-                    publishedPath = 'SampleDotnetWebApi\\Release'
+                    publishedPath = 'C:\\Release'
 
                     //Hedef makinesindeki IIS'de tanımlı olan sitenizin ismi
                     iisApplicationName = 'SampleDotnetWebApi'
@@ -68,7 +68,7 @@ pipeline {
                 //Deploy application on IIS
                 //bat 'net stop "w3svc"' 
                 //bat '%msdeploy% -verb:sync -source:iisApp="${WORKSPACE}\\${env.publishedPath}"  -dest:iisApp="${iisApplicationName}",ComputerName="https://${targetServerIP}:8172/msdeploy.axd",UserName="serviceaccount",Password="wBdL2azuw3333C556P",AuthType="Basic" -allowUntrusted -enableRule:AppOffline'
-                bat '%msdeploy% -verb:sync -source:iisApp="${WORKSPACE}\\${env.publishedPath}_v%BUILD_ID%" -dest:-dest:iisApp="${iisApplicationName} -skip:objectName=filePath, AuthType="Basic" -enableRule:DoNotDelete -allowUntrusted=true'
+                bat '%msdeploy% -verb:sync -source:iisApp="${publishedPath}\\${env.publishedPath}_v%BUILD_ID%" -dest:-dest:iisApp="${iisApplicationName} -skip:objectName=filePath, AuthType="Basic" -enableRule:DoNotDelete -allowUntrusted=true'
                 //bat 'net start "w3svc"'
             }
         }   
