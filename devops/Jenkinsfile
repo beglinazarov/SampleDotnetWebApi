@@ -20,7 +20,6 @@ pipeline {
                 bat '''
                     git
                     %dotnet% --info
-                    %msdeploy%
                 '''
             }
         }
