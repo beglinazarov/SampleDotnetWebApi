@@ -48,12 +48,13 @@ pipeline {
                 bat '%dotnet% publish -c release -o "C:\\Releases\\WebApi_v%BUILD_ID%" --no-restore' 
             }
         }
-        stage('Deploy Stage') {
+        stage('Deploy Stage | Dotnet WebApi deploy to IIS via msdeploy') {
             steps {
                 //Deploy application on IIS
                 bat 'net stop "w3svc"'
                 bat '%msdeploy% -verb:sync -source:package="C:\\Releases\\WebApi_v%BUILD_ID%" -dest:auto -setParam:"IIS Web Application Name"="SampleDotnetWebApi" -skip:objectName=filePath,absolutePath=".\\\\PackagDemoeTmp\\\\Web.config$" -enableRule:DoNotDelete -allowUntrusted=true'
                 bat 'net start "w3svc"'
             }
+        }   
     }
 }
