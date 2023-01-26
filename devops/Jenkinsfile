@@ -6,6 +6,20 @@ pipeline {
         dotnet = '\"C:\\Program Files\\dotnet\\dotnet.exe\"'
         msdeploy= '\"C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\"'
     }
+//Kaynak kodun içerisindeki projenin ismi
+String projectName = "SampleDotnetWebApi"
+
+//Kaynak kodun publish edileceği dizin
+String publishedPath = "SampleDotnetWebApi\\Release"
+
+//Hedef makinesindeki IIS'de tanımlı olan sitenizin ismi
+String iisApplicationName = "SampleDotnetWebApi"
+
+//Hedef makinesindeki IIS'de tanımlı olan sitenizin dizini
+String iisApplicationPath = "C:\\inetpub\\SampleDotnetWebApi"
+
+//Hedef makinesinin IP'si
+String targetServerIP = "0.0.0.0"
 
     stages {
         
@@ -50,8 +64,9 @@ pipeline {
         stage('Deploy Stage | Dotnet WebApi deploy to IIS via msdeploy') {
             steps {
                 //Deploy application on IIS
-                //bat 'net stop "w3svc"'
-                bat '%msdeploy% -verb:sync -source:iisApp="C:\\Releases\\WebApi_v%BUILD_ID%" -dest:auto -skip:objectName=filePath,absolutePath=".\\\\PackagDemoeTmp\\\\Web.config$" -enableRule:DoNotDelete -allowUntrusted=true'
+                //bat 'net stop "w3svc"' 
+                bat '%msdeploy% -verb:sync -source:iisApp="${WORKSPACE}\\${publishedPath}" -enableRule:AppOffline -dest:iisApp="${iisApplicationName}",ComputerName="https://${targetServerIP}:8172/msdeploy.axd",UserName="serviceaccount",Password="wBdL2azuw3333C556P",AuthType="Basic" -allowUntrusted'
+                //bat '%msdeploy% -verb:sync -source:iisApp="C:\\Releases\\WebApi_v%BUILD_ID%" -dest:auto -skip:objectName=filePath,absolutePath=".\\\\PackagDemoeTmp\\\\Web.config$" -enableRule:DoNotDelete -allowUntrusted=true'
                 //bat 'net start "w3svc"'
             }
         }   
