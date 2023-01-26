@@ -69,7 +69,7 @@ pipeline {
                 //bat 'net stop "w3svc"' 
                 //bat '%msdeploy% -verb:sync -source:iisApp="${WORKSPACE}\\${env.publishedPath}"  -dest:iisApp="${iisApplicationName}",ComputerName="https://${targetServerIP}:8172/msdeploy.axd",UserName="serviceaccount",Password="wBdL2azuw3333C556P",AuthType="Basic" -allowUntrusted -enableRule:AppOffline'
                 //bat '%msdeploy% -verb:sync -source:iisApp="${publishedPath}\\${env.publishedPath}_v%BUILD_ID%" -dest:-dest:iisApp="${iisApplicationName} -skip:objectName=filePath, AuthType="Basic" -enableRule:DoNotDelete -allowUntrusted=true'
-                withCredentials([usernamePassword(credentialsId: 'iis-credential', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) { 
+                withCredentials([usernamePassword(credentialsId: 'iis-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) { 
                     bat """ 
                         %msdeploy%  
                         -verb:sync 
