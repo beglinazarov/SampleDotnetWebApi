@@ -18,7 +18,7 @@ pipeline {
             steps {
                 bat '''
                     git
-                    dotnet
+                    "C:\\Program Files\\dotnet\\dotnet.exe" --info
                 '''
             }
         }
@@ -31,7 +31,7 @@ pipeline {
 
         stage("Dotnet Restoring packages") {
             steps {
-                bat 'dotnet restore %WORKSPACE%\\SampleDotnetWebApi.csproj'
+                bat '"C:\\Program Files\\dotnet\\dotnet.exe" restore "%WORKSPACE%\\SampleDotnetWebApi.csproj"'
             }
         }
     }
