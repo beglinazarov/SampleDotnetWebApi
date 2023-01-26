@@ -1,0 +1,5 @@
+<msbuild project="SampleDotnetWebApi.csproj" target="C:\Releases\SampleWebApi">
+  <property name="Configuration" value="Release" />
+  <property name="_PackageTempDir" value="C:\temp\prerelase-stuff" />
+  <property name="AutoParameterizationWebConfigConnectionStrings" value="false" />
+</msbuild>

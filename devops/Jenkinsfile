@@ -4,6 +4,7 @@ pipeline {
     agent any
     environment {
         dotnet = '\"C:\\Program Files\\dotnet\\dotnet.exe\"'
+        msdeploy= '\"C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\"'
     }
 
     stages {
@@ -19,6 +20,7 @@ pipeline {
                 bat '''
                     git
                     %dotnet% --info
+                    %msdeploy%
                 '''
             }
         }
@@ -38,7 +40,6 @@ pipeline {
         stage('DotNet Build & Publish ') {
             steps {
                 bat '%dotnet% build "%WORKSPACE%\\SampleDotnetWebApi.csproj"' 
-                bat '%dotnet% publish -c release -o "Releases\\WebApi_v%BUILD_ID%" --no-restore' 
             }
         }
 
@@ -47,6 +48,12 @@ pipeline {
                 bat '%dotnet% publish -c release -o "C:\\Releases\\WebApi_v%BUILD_ID%" --no-restore' 
             }
         }
-
+        stage('Deploy Stage') {
+            steps {
+                //Deploy application on IIS
+                bat 'net stop "w3svc"'
+                bat '%msdeploy% -verb:sync -source:package="C:\\Releases\\WebApi_v%BUILD_ID%" -dest:auto -setParam:"IIS Web Application Name"="SampleDotnetWebApi" -skip:objectName=filePath,absolutePath=".\\\\PackagDemoeTmp\\\\Web.config$" -enableRule:DoNotDelete -allowUntrusted=true'
+                bat 'net start "w3svc"'
+            }
     }
 }
