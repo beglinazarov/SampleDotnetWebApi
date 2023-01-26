@@ -1,3 +1,4 @@
+
 pipeline {
 
     agent any
@@ -12,6 +13,15 @@ pipeline {
                 cleanWs()
             }
         }
+        
+        stage ('Verifying toolsets') {
+            steps {
+                bat '''
+                    git
+                    dotnet
+                '''
+            }
+        }
 
         stage('Checkout Stage') {
             steps {
@@ -19,7 +29,7 @@ pipeline {
             }
         }
 
-        stage("Restoring packages") {
+        stage("Dotnet Restoring packages") {
             steps {
                 bat 'dotnet restore %WORKSPACE%\\SampleDotnetWebApi.csproj'
             }
