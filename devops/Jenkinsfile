@@ -50,25 +50,25 @@ pipeline {
         stage('Deploy Stage | Dotnet WebApi deploy to IIS via msdeploy') {
             environment {
                     //Kaynak kodun içerisindeki projenin ismi
-                    projectName = "SampleDotnetWebApi"
+                    projectName = 'SampleDotnetWebApi'
 
                     //Kaynak kodun publish edileceği dizin
-                    publishedPath = "SampleDotnetWebApi\\Release"
+                    publishedPath = 'SampleDotnetWebApi\\Release'
 
                     //Hedef makinesindeki IIS'de tanımlı olan sitenizin ismi
-                    iisApplicationName = "SampleDotnetWebApi"
+                    iisApplicationName = 'SampleDotnetWebApi'
 
                     //Hedef makinesindeki IIS'de tanımlı olan sitenizin dizini
-                    iisApplicationPath = "C:\\inetpub\\SampleDotnetWebApi"
+                    iisApplicationPath = 'C:\\inetpub\\SampleDotnetWebApi'
 
                     //Hedef makinesinin IP'si
-                    targetServerIP = "0.0.0.0"
+                    targetServerIP = '0.0.0.0'
                 }
             steps {
                 //Deploy application on IIS
                 //bat 'net stop "w3svc"' 
-                bat '%msdeploy% -verb:sync -source:iisApp="${WORKSPACE}\\${env.publishedPath}" -enableRule:AppOffline -dest:iisApp="${iisApplicationName}",ComputerName="https://${targetServerIP}:8172/msdeploy.axd",UserName="serviceaccount",Password="wBdL2azuw3333C556P",AuthType="Basic" -allowUntrusted'
-                //bat '%msdeploy% -verb:sync -source:iisApp="C:\\Releases\\WebApi_v%BUILD_ID%" -dest:auto -skip:objectName=filePath,absolutePath=".\\\\PackagDemoeTmp\\\\Web.config$" -enableRule:DoNotDelete -allowUntrusted=true'
+                //bat '%msdeploy% -verb:sync -source:iisApp="${WORKSPACE}\\${env.publishedPath}"  -dest:iisApp="${iisApplicationName}",ComputerName="https://${targetServerIP}:8172/msdeploy.axd",UserName="serviceaccount",Password="wBdL2azuw3333C556P",AuthType="Basic" -allowUntrusted -enableRule:AppOffline'
+                bat '%msdeploy% -verb:sync -source:iisApp="${WORKSPACE}\\${env.publishedPath}_v%BUILD_ID%" -dest:-dest:iisApp="${iisApplicationName} -skip:objectName=filePath, AuthType="Basic" -enableRule:DoNotDelete -allowUntrusted=true'
                 //bat 'net start "w3svc"'
             }
         }   
