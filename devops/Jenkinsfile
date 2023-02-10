@@ -26,7 +26,16 @@ pipeline {
 
         stage('Checkout Stage') {
             steps {
-                git credentialsId: '1efe5f58-ab50-4dbb-8aff-7cba115d80aa', url: 'https://github.com/beglinazarov/SampleDotnetWebApi.git', branch: 'master'
+                //git credentialsId: '1efe5f58-ab50-4dbb-8aff-7cba115d80aa', url: 'https://github.com/beglinazarov/SampleDotnetWebApi.git', branch: 'master'
+
+                checkout([  
+                    $class: 'GitSCM', 
+                    branches: [[name: 'refs/heads/master']], 
+                    doGenerateSubmoduleConfigurations: false, 
+                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'Corporate.WebService']], 
+                    submoduleCfg: [], 
+                    userRemoteConfigs: [[credentialsId: '1efe5f58-ab50-4dbb-8aff-7cba115d80aa', url: 'https://github.com/beglinazarov/SampleDotnetWebApi.git']]
+                ])
             }
         }
 
