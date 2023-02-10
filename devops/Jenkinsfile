@@ -32,7 +32,7 @@ pipeline {
                     $class: 'GitSCM', 
                     branches: [[name: 'refs/heads/master']], 
                     doGenerateSubmoduleConfigurations: false, 
-                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'Corporate.WebService']], 
+                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '']], 
                     submoduleCfg: [], 
                     userRemoteConfigs: [[credentialsId: '1efe5f58-ab50-4dbb-8aff-7cba115d80aa', url: 'https://github.com/beglinazarov/SampleDotnetWebApi.git']]
                 ])
