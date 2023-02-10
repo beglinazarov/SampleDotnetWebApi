@@ -36,6 +36,15 @@ pipeline {
                     submoduleCfg: [], 
                     userRemoteConfigs: [[credentialsId: '1efe5f58-ab50-4dbb-8aff-7cba115d80aa', url: 'https://github.com/beglinazarov/SampleDotnetWebApi.git']]
                 ])
+
+                checkout([  
+                    $class: 'GitSCM', 
+                    branches: [[name: 'refs/heads/master']], 
+                    doGenerateSubmoduleConfigurations: false, 
+                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'temp']], 
+                    submoduleCfg: [], 
+                    userRemoteConfigs: [[credentialsId: 'github-pat', url: 'https://github.com/beglinazarov/SampleDotnetWebApi.git']]
+                ])
             }
         }
 
