@@ -3,7 +3,7 @@ pipeline {
 
     agent { label 'ws-agent' }
     environment {
-        git = '\"C:\\Program Files\\Git\bin\git.exe\"'
+        git = '\"C:\\Program Files\\Git\\bin\\git.exe\"'
         dotnet = '\"C:\\Program Files\\dotnet\\dotnet.exe\"'
         msdeploy= '\"C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\"'
     }
